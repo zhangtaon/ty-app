@@ -13,7 +13,7 @@
             :label="item.title"
             :name="item.tabIndex"
           >
-            <component :is="item.component"></component>
+            <component :is="item.component" :params="item.params"></component>
           </el-tab-pane>
         </el-tabs>
       </el-main>
@@ -29,15 +29,17 @@ export default {
   computed: {
     ...mapState({
       menus: state => state.menu.menus,
-      routes: state => state.menu.routes
-    })
-  },
-  data: function() {
-    return {
-      tabs: [],
-      activeTabIndex: 0,
-      tabIndex: 0
-    };
+      routes: state => state.menu.routes,
+      tabs: state => state.menu.tabs
+    }),
+    activeTabIndex: {
+      get() {
+        return this.$store.state.menu.activeTabIndex;
+      },
+      set(val) {
+        this.$store.commit("setActiveTabIndex", val);
+      }
+    }
   },
   components: {
     TyMenuTree
@@ -46,59 +48,32 @@ export default {
     this.getMenus();
   },
   methods: {
-    ...mapActions(["getMenus", "getRouterComponony"]),
-    /**
-     * 添加tab组件
-     */
-    async addTab(params) {
-      const tab = await this.getRouterComponony({
-        params: params,
-        tabIndex: this.tabIndex++
-      });
-      let _tab;
-      for (let i = 0; i < this.tabs.length; i++) {
-        if (tab.title == this.tabs[i].title) {
-          _tab = this.tabs[i];
-          break;
-        }
-      }
-      if (!_tab) {
-        this.tabs.push(tab);
-      }
-      this.activeTabIndex = _tab ? _tab.tabIndex : tab.tabIndex;
-    },
-    /**
-     * 删除tab组件
-     */
-    removeTab(targetName) {
-      let tabs = this.tabs;
-      let activeName = this.activeTabIndex;
-      if (activeName === targetName) {
-        tabs.forEach((tab, index) => {
-          if (tab.tabIndex === targetName) {
-            let nextTab = tabs[index + 1] || tabs[index - 1];
-            if (nextTab) {
-              activeName = nextTab.tabIndex;
-            }
-          }
-        });
-      }
-      this.activeTabIndex = activeName;
-      this.tabs = tabs.filter(tab => tab.tabIndex !== targetName);
-    }
+    ...mapActions(["getMenus", "addTab", "removeTab"])
   },
   watch: {
+    /**
+     * 路由发生变化的时候触发(刷新的情况)
+     */
     routes() {
+      // console.log("watch...");
       if (Object.keys(this.$route.params).length) {
         this.addTab(this.$route.params);
       }
     }
   },
+  /**
+   * 非第一次变动前触发
+   */
   beforeRouteUpdate(to, from, next) {
+    // console.log("beforeRouteUpdate...",to.params);
     this.addTab(to.params);
     next();
   },
+  /**
+   * 第一次点击菜单路由变动时触发
+   */
   beforeRouteLeave(to, from, next) {
+    // console.log("beforeRouteLeave...");
     if (Object.keys(to.params).length) {
       this.addTab(to.params);
     }
