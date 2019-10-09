@@ -6,16 +6,7 @@
         <ty-menu-tree :menus="menus"></ty-menu-tree>
       </el-aside>
       <el-main>
-        <el-tabs v-model="activeTabIndex" type="card" closable @tab-remove="removeTab">
-          <el-tab-pane
-            v-for="item in tabs"
-            :key="item.title"
-            :label="item.title"
-            :name="item.tabIndex"
-          >
-            <component :is="item.component" :params="item.params"></component>
-          </el-tab-pane>
-        </el-tabs>
+        <router-view></router-view>
       </el-main>
     </el-container>
   </el-container>
@@ -28,18 +19,8 @@ export default {
   name: "App",
   computed: {
     ...mapState({
-      menus: state => state.menu.menus,
-      routes: state => state.menu.routes,
-      tabs: state => state.menu.tabs
-    }),
-    activeTabIndex: {
-      get() {
-        return this.$store.state.menu.activeTabIndex;
-      },
-      set(val) {
-        this.$store.commit("setActiveTabIndex", val);
-      }
-    }
+      menus: state => state.menu.menus
+    })
   },
   components: {
     TyMenuTree
@@ -48,36 +29,7 @@ export default {
     this.getMenus();
   },
   methods: {
-    ...mapActions(["getMenus", "addTab", "removeTab"])
-  },
-  watch: {
-    /**
-     * 路由发生变化的时候触发(刷新的情况)
-     */
-    routes() {
-      // console.log("watch...");
-      if (Object.keys(this.$route.params).length) {
-        this.addTab(this.$route.params);
-      }
-    }
-  },
-  /**
-   * 非第一次变动前触发
-   */
-  beforeRouteUpdate(to, from, next) {
-    // console.log("beforeRouteUpdate...",to.params);
-    this.addTab(to.params);
-    next();
-  },
-  /**
-   * 第一次点击菜单路由变动时触发
-   */
-  beforeRouteLeave(to, from, next) {
-    // console.log("beforeRouteLeave...");
-    if (Object.keys(to.params).length) {
-      this.addTab(to.params);
-    }
-    next();
+    ...mapActions(["getMenus"])
   }
 };
 </script>
@@ -110,8 +62,7 @@ html {
     line-height: 200px;
   }
   .el-main {
-    // background-color: #e9eef3;
-    background-color: #fff;
+    background-color: #e9eef3;
     color: #333;
     // text-align: center;
     // line-height: 160px;
