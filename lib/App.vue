@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { TyMenuTree } from "ty-componeny";
+import { TyMenuTree } from "ty-component";
 import { mapState, mapActions } from "vuex";
 export default {
   name: "App",
