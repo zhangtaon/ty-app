@@ -24,12 +24,6 @@ export default {
   },
   components: {
     TyMenuTree
-  },
-  created() {
-    this.getMenus();
-  },
-  methods: {
-    ...mapActions(["getMenus"])
   }
 };
 </script>
