@@ -1,6 +1,9 @@
 <template>
   <el-container class="app">
-    <el-header>*********有限公司</el-header>
+    <el-header>
+      *********有限公司
+        <el-button type="primary" @click="logout()">退出</el-button>
+    </el-header>
     <el-container>
       <el-aside width="200px">
         <ty-menu-tree :menus="menus"></ty-menu-tree>
@@ -24,6 +27,9 @@ export default {
   },
   components: {
     TyMenuTree
+  },
+  methods: {
+    ...mapActions(["logout"]),
   }
 };
 </script>
