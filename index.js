@@ -1,9 +1,5 @@
-import menu from "./lib/store/menu"
+import store from "./lib/store"
 import getAppRoute from "./lib/util"
 import App from "./lib/App.vue"
 
-export {
-    menu,
-    getAppRoute,
-    App
-}
+export { getAppRoute, App, store}

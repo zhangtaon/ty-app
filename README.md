@@ -1,2 +1,2 @@
 # ty-app
-Vue + ty-componony + Vuex
+[Vue](https://cn.vuejs.org/v2/guide/) + [Vuex](https://vuex.vuejs.org/)
