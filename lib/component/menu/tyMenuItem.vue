@@ -31,6 +31,7 @@ export default {
   methods: {
     ...mapActions(["setOperate"]),
     goto: function(item) {
+      //设置路由页面的具备的操作权限
       this.setOperate(item.buttons);
       this.$router.push(`/${item.router}` || "/enterprise");
     }
