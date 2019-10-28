@@ -7,16 +7,16 @@
           <span>{{systemName}}</span>
         </div>
         <div class="operate">
-          <router-link to="/gis">
+          <router-link to="/gis" v-if="isCz">
             <img src="./image/home.png" alt />
           </router-link>
-          <a>
+          <a v-if="isCz">
             <img src="./image/menu.png" alt />
           </a>
-          <a>
+          <a v-if="isCz">
             <img src="./image/alarm.png" alt />
           </a>
-          <a>
+          <a v-if="isCz">
             <img src="./image/info.png" alt />
           </a>
           <a @click="logout()">
@@ -45,11 +45,17 @@ export default {
   computed: {
     ...mapState({
       menus: state => state.menu.menus
-    })
+    }),
+    isCz: {
+      get: function() {
+        return this.system === "gis-cangzhou";
+      }
+    }
   },
   data() {
     return {
-      systemName: require("../../../package.json").description
+      systemName: require("../../../package.json").description,
+      system: require("../../../package.json").name
     };
   },
   components: {
