@@ -3,7 +3,7 @@
   <el-row class="login">
     <div class="box">
       <img src="../image/login/logo.png" alt />
-      <span class="system-name">TY后台管理系统</span>
+      <span class="system-name">{{systemName}}</span>
       <div class="form-container">
         <ValidationObserver ref="observer" v-slot="{ passes }">
           <el-form ref="form">
@@ -54,6 +54,7 @@ export default {
   },
   data() {
     return {
+      systemName: require("../../../../package.json").description,
       form: {
         loginName: "",
         password: ""
