@@ -72,6 +72,7 @@ export default {
 .login {
   margin: 0 auto;
   background-image: url(../image/login/bg.png);
+  width: 100%;
 
   .box {
     display: -webkit-flex; /* Safari */

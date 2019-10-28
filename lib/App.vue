@@ -109,10 +109,14 @@ html {
     }
   }
   .el-aside {
+    border-right: solid 1px #d8d8d8;
     background-color: #f6f6f6;
     color: #333;
     text-align: center;
     line-height: 200px;
+    .el-menu {
+      border-right: 0;
+    }
     .el-menu-item,
     .el-submenu {
       text-align: left;
@@ -124,7 +128,7 @@ html {
     }
   }
   .el-main {
-    background-color: #e9eef3;
+    background-color: #f6f7fa;
     color: #333;
   }
   height: 100%;
