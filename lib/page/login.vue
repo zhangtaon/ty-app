@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { TyInput } from "ty-component";
+import { TyInput } from "@ty-component";
 import { ValidationObserver } from "vee-validate";
 import { mapState, mapActions } from "vuex";
 
