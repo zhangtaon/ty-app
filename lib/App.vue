@@ -27,7 +27,7 @@
       <!-- <el-button type="primary" @click="logout()">退出</el-button> -->
     </el-header>
     <el-container>
-      <el-aside width="304px">
+      <el-aside width="264px">
         <ty-menu-tree :menus="menus"></ty-menu-tree>
       </el-aside>
       <el-main>
@@ -134,8 +134,154 @@ html {
     }
   }
   .el-main {
-    background-color: #f6f7fa;
+    position: relative;
+    background: rgba(242, 242, 242, 1);
     color: #333;
+    padding: 0 20px;
+    // 面包屑
+    .el-breadcrumb {
+      padding: 14px 0 14px 8px;
+    }
+    // 搜索条
+    .ty-search-bar {
+      background: rgba(251, 251, 251, 1);
+      box-shadow: 0px 0px 8px 0px rgba(182, 206, 240, 0.8);
+      padding: 16px 16px 0;
+      margin-bottom: 16px;
+      .el-input {
+        margin-right: 16px;
+        width: 208px;
+        margin-bottom: 16px;
+      }
+    }
+    // 容器
+    .ty-container {
+      position: relative;
+      background: rgba(251, 251, 251, 1);
+      box-shadow: 0px 0px 8px 0px rgba(182, 206, 240, 0.8);
+      padding: 0 16px;
+      .el-pagination {
+        text-align: center;
+        padding: 28px;
+      }
+      // 内容区
+      .ty-content {
+        position: absolute;
+        height: calc(
+          100% - 81px
+        ); //(ty-bar)81 = height+padding-top+padding-bottom+margin-bottom
+        /* top: 81px; */
+        width: calc(100% - 32px); //32 = 边距16*2
+        overflow-y: scroll;
+        padding-bottom: 80px;
+      }
+    }
+    // 通用板块条 一级
+    .ty-bar {
+      padding: 24px 0;
+      display: -webkit-flex; /* Safari */
+      display: flex;
+      justify-content: space-between; //两侧的间隔相等
+      align-items: center; //垂直居中
+      .ty-headline {
+        display: -webkit-flex; /* Safari */
+        display: flex;
+        align-items: center; //垂直居中
+
+        font-size: 16px;
+        font-family: AlibabaPuHuiTi-Regular, AlibabaPuHuiTi;
+        font-weight: 400;
+        color: rgba(119, 126, 140, 1);
+        &:before {
+          content: "";
+          width: 6px;
+          height: 20px;
+          background-color: #1890ff;
+          margin-right: 8px;
+        }
+      }
+      .el-button {
+        margin-right: 16px;
+        margin-left: 0;
+      }
+    }
+    // 通用板块条 二级
+    .ty-second-bar {
+      background:rgba(247,250,255,1);
+      border-top: 1px solid #D8D8D8;
+      border-bottom: 1px solid #D8D8D8;
+      padding: 0 24px;
+      margin-top: 14px;
+      margin-bottom: 10px;
+      color: #0E1926;
+      font-size: 14px;
+      display: -webkit-flex; /* Safari */
+      display: flex;
+      justify-content: space-between; //两侧的间隔相等
+      align-items: center; //垂直居中
+      .ty-second-headline {
+        height:56px;
+        line-height: 56px;
+        background:rgba(247,250,255,1);
+      }
+      .el-button {
+        margin-right: 0;
+        margin-left: 16px;
+      }
+    }
+    // 详情页通用控制
+    .ty-detail {
+      height: calc(100% - 42px); //42(面包屑）
+      position: absolute;
+      width: calc(100% - 40px);
+      // 详情页面板块条
+      .ty-bar {
+        padding-bottom: 8px;
+        border-bottom: 1px solid #d8d8d8;
+        margin-bottom: 8px;
+      }
+      .ty-form-container-bottom-mask {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 30px;
+        // background: rgba(0, 0, 0, 0.5);
+        z-index: 100;
+
+        background: -webkit-linear-gradient(
+          bottom,
+          #999,
+          #fff
+        ); /* Safari 5.1 - 6 */
+        background: -o-linear-gradient(top, #999, #fff); /* Opera 11.1 - 12*/
+        background: -moz-linear-gradient(top, #999, #fff); /* Firefox 3.6 - 15*/
+        background: linear-gradient(to top, #999, #fff);
+      }
+      // 详情页面下拉框宽度控制
+      /deep/.el-select {
+        width: 100%;
+      }
+      // 详情页面日期控件的宽度控制
+      .el-date-editor {
+        width: 100%;
+      }
+
+      .el-form-item--small .el-form-item__content button,
+      .el-form-item--small .el-form-item__label button {
+        line-height: 17px;
+      }
+    }
+    //上传框隐藏
+    .ty-upload{
+      width: 360px;
+      .el-upload .el-upload__input {
+          display: none;
+      }
+      .el-upload__tip{
+        margin-left: 30px;
+      }
+    }
   }
   height: 100%;
 }
