@@ -24,6 +24,7 @@
               label="登录密码"
               placeholder="请输入登录密码"
               hideLabel
+              @keyup.enter.native="passes(doLogin)"
             />
           </el-form>
           <!-- <el-button @click="reset">重 置</el-button> -->
