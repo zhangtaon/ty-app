@@ -8,9 +8,9 @@
         </template>
         <ty-menu-item :menus="item.children"></ty-menu-item>
       </el-submenu>
-      <el-menu-item v-if="!item.children" :key="index" :index="item.name">
+      <el-menu-item v-if="!item.children" :key="index" :index="item.name" @click="goto(item)">
         <ty-menu-icon :name="item.name"></ty-menu-icon>
-        <span slot="title" @click="goto(item)">{{item.name}}</span>
+        <span slot="title">{{item.name}}</span>
       </el-menu-item>
     </template>
   </div>

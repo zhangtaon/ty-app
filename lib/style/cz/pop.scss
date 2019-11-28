@@ -1,0 +1,41 @@
+// header 菜单pop
+.menuPop{
+  padding: 0 !important;
+  top: 66px !important;
+  .menu{
+    width: 49%;
+    height: 38px;
+    line-height: 38px;
+    display: inline-block;
+    cursor: pointer;
+    &:nth-child(odd){
+      padding-left: 15px;
+    }
+    &:nth-child(even){
+      padding-left: 8px;
+    }
+  }
+  .active{
+    background:rgba(246,247,250,1);
+    color:rgba(24,144,255,1);
+  }
+}
+// header 设置pop
+.settingPop{
+  padding: 0 !important;
+  top: 66px !important;
+  .item{
+    height: 39px;
+    line-height: 39px;
+    padding: 0 20px;
+    cursor: pointer;
+  }
+  .username{
+    text-align: center;
+    border-bottom: 1px solid #D8D8D8;
+  }
+  .exit{
+    background:rgba(246,247,250,1);
+    color:rgba(216,30,6,1);
+  }
+}

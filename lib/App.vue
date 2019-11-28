@@ -1,34 +1,75 @@
 <template>
-  <el-container class="app">
+  <el-container class="app cz">
     <el-header height="72px">
+      <el-popover
+        popper-class="menuPop"
+        ref="menuPop"
+        placement="bottom-start"
+        width="262"
+        v-model="menuPop"
+      >
+        <div class="menu" v-for="(item,index) in menus" @click="setSecondMenu(item)" :class="{active: oneLevelMenuId == item.id}">
+        <!-- <div class="menu active" v-for="(item,index) in menus" @click="setSecondMenu(item)"> -->
+          <span
+            class="iconfont"
+            :class="{'iconzonghexinxichaxun': item.id==1000000,'iconzhishiku': item.id==2000000,'iconpeizhizhongxin': item.id==3000000,'iconkeshihuaGISjiankong': item.id==4000000,'iconshipinjiankong': item.id==5000000,'iconzongheanquanshitaifenxi': item.id==6000000,'iconguochenganquanguanli': item.id==7000000,'iconyingjiguanli': item.id==8000000,'iconchengbaoshangguanli': item.id==1900,}"
+          ></span>
+          {{item.name}}
+        </div>
+      </el-popover>
+      <el-popover
+        popper-class="settingPop"
+        ref="settingPop"
+        placement="bottom-end"
+        width="126"
+        v-model="settingPop"
+      >
+        <div class="item">
+          <div class="username">王秀一</div>
+        </div>
+        <div class="item">
+          <span class="iconfont iconyonghushezhi2"></span>
+          用户设置
+        </div>
+        <div class="item">
+          <span class="iconfont iconxiugaimima"></span>
+          修改密码
+        </div>
+        <div class="item exit" @click="logout()">
+          <span class="iconfont icontuichu1"></span>
+          退出
+        </div>
+      </el-popover>
       <div class="box-between-center">
         <div class="box-between-center logo">
           <img src="./image/logo-header.png" alt />
           <span>{{systemName}}</span>
         </div>
         <div class="operate">
-          <router-link to="/gis" v-if="isCz">
-            <img src="./image/home.png" alt />
-          </router-link>
-          <a v-if="isCz">
+          <span v-if="isCz" class="item">
+            <router-link to="/gis">
+              <img src="./image/home.png" alt />
+            </router-link>
+          </span>
+          <span v-if="isCz" v-popover:menuPop class="item" :class="{'active': menuPop}">
             <img src="./image/menu.png" alt />
-          </a>
-          <a v-if="isCz">
+          </span>
+          <span v-if="isCz" class="item">
             <img src="./image/alarm.png" alt />
-          </a>
-          <a v-if="isCz">
+          </span>
+          <span v-if="isCz" class="item">
             <img src="./image/info.png" alt />
-          </a>
-          <a @click="logout()">
+          </span>
+          <span class="item" v-popover:settingPop :class="{'active': settingPop}">
             <img src="./image/crm.png" alt />
-          </a>
+          </span>
         </div>
       </div>
       <!-- <el-button type="primary" @click="logout()">退出</el-button> -->
     </el-header>
     <el-container>
-      <el-aside width="264px">
-        <ty-menu-tree :menus="menus"></ty-menu-tree>
+      <el-aside width="256px">
+        <ty-menu-tree :menus="secondMenu"></ty-menu-tree>
       </el-aside>
       <el-main>
         <router-view></router-view>
@@ -40,6 +81,8 @@
 <script>
 import TyMenuTree from "./component/menu/tyMenuTree.vue";
 import { mapState, mapActions } from "vuex";
+import "./style/cz/index.scss";
+
 export default {
   name: "App",
   computed: {
@@ -55,14 +98,22 @@ export default {
   data() {
     return {
       systemName: require("../../../package.json").description,
-      system: require("../../../package.json").name
+      system: require("../../../package.json").name,
+      menuPop: false,
+      settingPop: false,
+      secondMenu: [],
+      oneLevelMenuId:null
     };
   },
   components: {
     TyMenuTree
   },
   methods: {
-    ...mapActions(["logout"])
+    ...mapActions(["logout"]),
+    setSecondMenu(item) {
+      this.secondMenu = item.children;
+      this.oneLevelMenuId = item.id;
+    }
   }
 };
 </script>
@@ -90,199 +141,8 @@ html {
   flex-direction: row; //从左到右
   height: 100%;
 }
-.app {
-  .el-header {
-    background-color: #273342;
-    height: 72px;
-    .logo {
-      font-family: AlibabaPuHuiTi-Medium;
-      font-size: 24px;
-      color: #ffffff;
-      letter-spacing: 0;
-      line-height: 34px;
-      // width: 400px;
-      img {
-        width: 34px;
-      }
-    }
-    .operate {
-      a {
-        width: 65px;
-        display: inline-block;
-        text-align: center;
-        cursor: pointer;
-      }
-    }
-  }
-  .el-aside {
-    border-right: solid 1px #d8d8d8;
-    background-color: #f6f6f6;
-    color: #333;
-    text-align: center;
-    line-height: 200px;
-    .el-menu {
-      border-right: 0;
-    }
-    .el-menu-item,
-    .el-submenu {
-      text-align: left;
-    }
-    .el-submenu__title,
-    .el-menu-item {
-      font-size: 20px;
-      background-color: #f6f6f6;
-    }
-  }
-  .el-main {
-    position: relative;
-    background: rgba(242, 242, 242, 1);
-    color: #333;
-    padding: 0 20px;
-    // 面包屑
-    .el-breadcrumb {
-      padding: 14px 0 14px 8px;
-    }
-    // 搜索条
-    .ty-search-bar {
-      background: rgba(251, 251, 251, 1);
-      box-shadow: 0px 0px 8px 0px rgba(182, 206, 240, 0.8);
-      padding: 16px 16px 0;
-      margin-bottom: 16px;
-      .el-input {
-        margin-right: 16px;
-        width: 208px;
-        margin-bottom: 16px;
-      }
-    }
-    // 容器
-    .ty-container {
-      position: relative;
-      background: rgba(251, 251, 251, 1);
-      box-shadow: 0px 0px 8px 0px rgba(182, 206, 240, 0.8);
-      padding: 0 16px;
-      .el-pagination {
-        text-align: center;
-        padding: 28px;
-      }
-      // 内容区
-      .ty-content {
-        position: absolute;
-        height: calc(
-          100% - 81px
-        ); //(ty-bar)81 = height+padding-top+padding-bottom+margin-bottom
-        /* top: 81px; */
-        width: calc(100% - 32px); //32 = 边距16*2
-        overflow-y: scroll;
-        padding-bottom: 80px;
-      }
-    }
-    // 通用板块条 一级
-    .ty-bar {
-      padding: 24px 0;
-      display: -webkit-flex; /* Safari */
-      display: flex;
-      justify-content: space-between; //两侧的间隔相等
-      align-items: center; //垂直居中
-      .ty-headline {
-        display: -webkit-flex; /* Safari */
-        display: flex;
-        align-items: center; //垂直居中
-
-        font-size: 16px;
-        font-family: AlibabaPuHuiTi-Regular, AlibabaPuHuiTi;
-        font-weight: 400;
-        color: rgba(119, 126, 140, 1);
-        &:before {
-          content: "";
-          width: 6px;
-          height: 20px;
-          background-color: #1890ff;
-          margin-right: 8px;
-        }
-      }
-      .el-button {
-        margin-right: 16px;
-        margin-left: 0;
-      }
-    }
-    // 通用板块条 二级
-    .ty-second-bar {
-      background:rgba(247,250,255,1);
-      border-top: 1px solid #D8D8D8;
-      border-bottom: 1px solid #D8D8D8;
-      padding: 0 24px;
-      margin-top: 14px;
-      margin-bottom: 10px;
-      color: #0E1926;
-      font-size: 14px;
-      display: -webkit-flex; /* Safari */
-      display: flex;
-      justify-content: space-between; //两侧的间隔相等
-      align-items: center; //垂直居中
-      .ty-second-headline {
-        height:56px;
-        line-height: 56px;
-        background:rgba(247,250,255,1);
-      }
-      .el-button {
-        margin-right: 0;
-        margin-left: 16px;
-      }
-    }
-    // 详情页通用控制
-    .ty-detail {
-      height: calc(100% - 42px); //42(面包屑）
-      position: absolute;
-      width: calc(100% - 40px);
-      // 详情页面板块条
-      .ty-bar {
-        padding-bottom: 8px;
-        border-bottom: 1px solid #d8d8d8;
-        margin-bottom: 8px;
-      }
-      .ty-form-container-bottom-mask {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 30px;
-        // background: rgba(0, 0, 0, 0.5);
-        z-index: 100;
-
-        background: -webkit-linear-gradient(
-          bottom,
-          #999,
-          #fff
-        ); /* Safari 5.1 - 6 */
-        background: -o-linear-gradient(top, #999, #fff); /* Opera 11.1 - 12*/
-        background: -moz-linear-gradient(top, #999, #fff); /* Firefox 3.6 - 15*/
-        background: linear-gradient(to top, #999, #fff);
-      }
-      // 详情页面下拉框宽度控制
-      /deep/.el-select {
-        width: 100%;
-      }
-      // 详情页面日期控件的宽度控制
-      .el-date-editor {
-        width: 100%;
-      }
-
-      .el-form-item--small .el-form-item__content button,
-      .el-form-item--small .el-form-item__label button {
-        line-height: 17px;
-      }
-    }
-    //上传框隐藏
-    .ty-upload{
-      width: 360px;
-      .el-upload .el-upload__input {
-          display: none;
-      }
-      .el-upload__tip{
-        margin-left: 30px;
-      }
-    }
-  }
-  height: 100%;
+//解决获取焦点蓝色边框
+:focus {
+  outline: none;
 }
 </style>
