@@ -95,6 +95,9 @@ export default {
       }
     }
   },
+  created(){
+    this.setSecondMenu(this.menus[0]);
+  },
   data() {
     return {
       systemName: require("../../../package.json").description,
