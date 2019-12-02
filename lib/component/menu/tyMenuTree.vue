@@ -1,14 +1,11 @@
 <template>
   <el-menu
-    default-active="2"
+    :default-active="activeKey"
     class="el-menu-vertical-demo"
     @open="handleOpen"
     @close="handleClose"
-    background-color="#F6F6F6"
-    text-color="#0E1926"
-    active-text-color="#1890FF"
   >
-    <ty-menu-item :menus="menus"></ty-menu-item>
+    <ty-menu-item :menus="$store.state.menu.secondMenu.children"></ty-menu-item>
           <!-- <el-menu-item index="1">
             <template slot="title">
               <i class="el-icon-location"></i>
@@ -33,8 +30,10 @@ export default {
   components: {
     TyMenuItem
   },
-  props: {
-    menus: Array
+  computed:{
+    activeKey(){
+        return this.$route.path.split('/')[1];
+      }
   },
   methods: {
     handleOpen: function(key, keyPath) {

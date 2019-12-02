@@ -8,8 +8,7 @@
         width="262"
         v-model="menuPop"
       >
-        <div class="menu" v-for="(item,index) in menus" @click="setSecondMenu(item)" :class="{active: oneLevelMenuId == item.id}">
-        <!-- <div class="menu active" v-for="(item,index) in menus" @click="setSecondMenu(item)"> -->
+        <div class="menu" v-for="(item,index) in menus" @click="setSecondMenu(item)" :class="{active: secondMenu.id == item.id}">
           <span
             class="iconfont"
             :class="{'iconzonghexinxichaxun': item.id==1000000,'iconzhishiku': item.id==2000000,'iconpeizhizhongxin': item.id==3000000,'iconkeshihuaGISjiankong': item.id==4000000,'iconshipinjiankong': item.id==5000000,'iconzongheanquanshitaifenxi': item.id==6000000,'iconguochenganquanguanli': item.id==7000000,'iconyingjiguanli': item.id==8000000,'iconchengbaoshangguanli': item.id==1900,}"
@@ -69,7 +68,7 @@
     </el-header>
     <el-container>
       <el-aside width="256px">
-        <ty-menu-tree :menus="secondMenu"></ty-menu-tree>
+        <ty-menu-tree :menus="secondMenu.children"></ty-menu-tree>
       </el-aside>
       <el-main>
         <router-view></router-view>
@@ -80,14 +79,15 @@
 
 <script>
 import TyMenuTree from "./component/menu/tyMenuTree.vue";
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions , mapMutations} from "vuex";
 import "./style/cz/index.scss";
 
 export default {
   name: "App",
   computed: {
     ...mapState({
-      menus: state => state.menu.menus
+      menus: state => state.menu.menus,
+      secondMenu: state => state.menu.secondMenu,
     }),
     isCz: {
       get: function() {
@@ -96,7 +96,6 @@ export default {
     }
   },
   created(){
-    this.setSecondMenu(this.menus[0]);
   },
   data() {
     return {
@@ -104,8 +103,6 @@ export default {
       system: require("../../../package.json").name,
       menuPop: false,
       settingPop: false,
-      secondMenu: [],
-      oneLevelMenuId:null
     };
   },
   components: {
@@ -113,11 +110,8 @@ export default {
   },
   methods: {
     ...mapActions(["logout"]),
-    setSecondMenu(item) {
-      this.secondMenu = item.children;
-      this.oneLevelMenuId = item.id;
+    ...mapMutations(["setSecondMenu"]),
     }
-  }
 };
 </script>
 

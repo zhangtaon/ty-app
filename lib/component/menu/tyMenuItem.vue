@@ -1,14 +1,14 @@
 <template>
   <div>
     <template v-for="(item,index) in menus">
-      <el-submenu v-if="item.children" :key="index" :index="item.name">
+      <el-submenu v-if="item.children" :key="index" :index="item.router || item.name">
         <template slot="title">
           <ty-menu-icon :name="item.name"></ty-menu-icon>
           <span>{{item.name}}</span>
         </template>
         <ty-menu-item :menus="item.children"></ty-menu-item>
       </el-submenu>
-      <el-menu-item v-if="!item.children" :key="index" :index="item.name" @click="goto(item)">
+      <el-menu-item v-if="!item.children" :key="index" :index="item.router || item.name" @click="goto(item)">
         <ty-menu-icon :name="item.name"></ty-menu-icon>
         <span slot="title">{{item.name}}</span>
       </el-menu-item>
