@@ -15,16 +15,36 @@
       }
       // header右侧图标按钮
       .operate {
+        color: #fff;
+        .iconfont {
+          font-size: 24px !important;
+        }
         .item{
+          position: relative;
           display: inline-block;
-          line-height: 72px;
+          line-height: 64px;
           width: 64px;
-          display: inline-block;
           text-align: center;
           cursor: pointer;
         }
         .active {
           background:rgba(14,25,38,1);
+          .tip {
+            display: block;
+          }
+        }
+        .tip{
+          display: none;
+          position: absolute;
+          left: 0;
+          color: #fff;
+          width: 83px;
+          bottom: -22px;
+          z-index: 10000;
+          line-height: 20px;
+          background: rgba(0,0,0,0.4);
+          border-radius: 3px;
+          box-shadow: 0px 2px 8px 0px rgba(0,0,0,0.15);
         }
       }
     }

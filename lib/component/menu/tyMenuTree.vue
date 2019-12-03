@@ -25,15 +25,50 @@
 
 <script>
 import TyMenuItem from "./tyMenuItem.vue";
+import { mapState, mapActions} from "vuex";
+
 export default {
   name: "TyMenuTree",
   components: {
     TyMenuItem
   },
+  data(){
+    return{
+      routeUrl:""
+    }
+  },
   computed:{
-    activeKey(){
+    ...mapState({
+      secondMenu: state => state.menu.secondMenu
+    }),
+    activeKey: {
+      get(){
         return this.$route.path.split('/')[1];
+      },
+      set(val){
+        this.routeUrl = val;
       }
+    }
+  },
+  created(){
+    console.log("$store.state.menu.secondMenu.children:",this.$store.state.menu.secondMenu.children);
+  },
+  watch:{
+    activeKey(newval){
+      console.log("activeKey newval:",newval);
+    },
+    secondMenu(newVal){
+      let findFirstRoute = (item)=>{
+        if(item.children){
+          findFirstRoute(item.children[0]);
+        }else{
+          this.activeKey = item.router;
+        }
+      }
+      findFirstRoute(newVal);
+      this.$router.push(`/${this.routeUrl}`);
+
+    }
   },
   methods: {
     handleOpen: function(key, keyPath) {

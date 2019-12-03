@@ -6,12 +6,13 @@
         ref="menuPop"
         placement="bottom-start"
         width="262"
+        trigger="hover"
         v-model="menuPop"
       >
         <div class="menu" v-for="(item,index) in menus" @click="setSecondMenu(item)" :class="{active: secondMenu.id == item.id}">
           <span
             class="iconfont"
-            :class="{'iconzonghexinxichaxun': item.id==1000000,'iconzhishiku': item.id==2000000,'iconpeizhizhongxin': item.id==3000000,'iconkeshihuaGISjiankong': item.id==4000000,'iconshipinjiankong': item.id==5000000,'iconzongheanquanshitaifenxi': item.id==6000000,'iconguochenganquanguanli': item.id==7000000,'iconyingjiguanli': item.id==8000000,'iconchengbaoshangguanli': item.id==1900,}"
+            :class="{'iconzonghexinxichaxun': item.id==1000000,'iconzhishiku': item.id==2000000,'iconpeizhizhongxin': item.id==3000000,'iconkeshihuaGISjiankong': item.id==4000000,'iconshipinjiankong': item.id==5000000,'iconzongheanquanshitaifenxi': item.id==6000000,'iconguochenganquanguanli': item.id==7000000,'iconyingjiguanli': item.id==8000000,'iconchengbaoshangguanli': item.id==1900,'iconbaojingguanli': item.id==9000000}"
           ></span>
           {{item.name}}
         </div>
@@ -21,19 +22,20 @@
         ref="settingPop"
         placement="bottom-end"
         width="126"
+        trigger="hover"
         v-model="settingPop"
       >
         <div class="item">
-          <div class="username">王秀一</div>
+          <div class="username">{{userInfo.nickName}}</div>
         </div>
-        <div class="item">
+        <!-- <div class="item">
           <span class="iconfont iconyonghushezhi2"></span>
           用户设置
         </div>
         <div class="item">
           <span class="iconfont iconxiugaimima"></span>
           修改密码
-        </div>
+        </div> -->
         <div class="item exit" @click="logout()">
           <span class="iconfont icontuichu1"></span>
           退出
@@ -45,22 +47,34 @@
           <span>{{systemName}}</span>
         </div>
         <div class="operate">
-          <span v-if="isCz" class="item">
+          <!-- <span v-if="isCz" class="item">
             <router-link to="/gis">
               <img src="./image/home.png" alt />
             </router-link>
+          </span> -->
+          <span v-if="isCz" class="item" @click="to('/gis')" @mouseover="mouseOver('gis')" @mouseleave="mouseLeave" :class="{'active': active=='gis'}">
+              <span class="iconfont iconkeshihuaGISjiankong"></span>
+              <span class="tip">可视化GIS监控</span>
+          </span>
+          <span v-if="isCz" class="item" @click="to('/video')" @mouseover="mouseOver('video')" @mouseleave="mouseLeave" :class="{'active': active=='video'}">
+              <span class="iconfont iconshipinjiankong"></span>
+              <span class="tip">视频监控</span>
           </span>
           <span v-if="isCz" v-popover:menuPop class="item" :class="{'active': menuPop}">
-            <img src="./image/menu.png" alt />
+            <span class="iconfont iconcaidan"></span>
           </span>
+<!-- 报警暂时注销
           <span v-if="isCz" class="item">
             <img src="./image/alarm.png" alt />
           </span>
+           
           <span v-if="isCz" class="item">
             <img src="./image/info.png" alt />
           </span>
+          -->
           <span class="item" v-popover:settingPop :class="{'active': settingPop}">
-            <img src="./image/crm.png" alt />
+            <!-- <img src="./image/crm.png" alt /> -->
+            <span class="iconfont iconyonghushezhi"></span>
           </span>
         </div>
       </div>
@@ -88,6 +102,7 @@ export default {
     ...mapState({
       menus: state => state.menu.menus,
       secondMenu: state => state.menu.secondMenu,
+      userInfo: state => state.login.userInfo,
     }),
     isCz: {
       get: function() {
@@ -103,6 +118,7 @@ export default {
       system: require("../../../package.json").name,
       menuPop: false,
       settingPop: false,
+      active: ""
     };
   },
   components: {
@@ -111,7 +127,16 @@ export default {
   methods: {
     ...mapActions(["logout"]),
     ...mapMutations(["setSecondMenu"]),
-    }
+    to(url){
+      window.open(this.$router.resolve({ path: url }).href, "_blank");
+    },
+    mouseOver(name){
+      this.active = name;
+    },
+    mouseLeave(){
+      this.active = "";
+    },
+  }
 };
 </script>
 
