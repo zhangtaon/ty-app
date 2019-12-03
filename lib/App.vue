@@ -26,7 +26,7 @@
         v-model="settingPop"
       >
         <div class="item">
-          <div class="username">{{userInfo.nickName}}</div>
+          <div class="username">{{userInfo ? userInfo.nickName : ""}}</div>
         </div>
         <!-- <div class="item">
           <span class="iconfont iconyonghushezhi2"></span>
