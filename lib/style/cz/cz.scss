@@ -96,6 +96,9 @@
           width: 208px;
           margin-bottom: 16px;
         }
+        .el-button{
+          margin-bottom: 14px;
+        }
       }
       // 容器
       .ty-container {
@@ -163,7 +166,7 @@
         justify-content: space-between; //两侧的间隔相等
         align-items: center; //垂直居中
         .ty-second-headline {
-          height:56px;
+          height:57px;
           line-height: 56px;
           background:rgba(247,250,255,1);
         }
