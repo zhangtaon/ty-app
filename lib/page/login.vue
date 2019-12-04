@@ -73,7 +73,7 @@ export default {
 <style lang="scss" scoped>
 .login {
   margin: 0 auto;
-  background-image: url(../image/login/bg.png);
+  background-image: url(../image/login/bg.jpg);
   width: 100%;
 
   .box {
