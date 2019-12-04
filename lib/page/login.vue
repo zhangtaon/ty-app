@@ -104,7 +104,13 @@ export default {
   }
   /deep/.el-input--small .el-input__inner {
     height: 56px;
-    font-family: AlibabaPuHuiTi-Regular;
+    font-size: 20px;
+    color: #afbaca;
+    letter-spacing: 0;
+    line-height: 28px;
+  }
+  /deep/.el-input--medium .el-input__inner {
+    height: 56px;
     font-size: 20px;
     color: #afbaca;
     letter-spacing: 0;
