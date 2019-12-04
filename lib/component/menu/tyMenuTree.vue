@@ -43,7 +43,8 @@ export default {
     }),
     activeKey: {
       get(){
-        return this.$route.path.split('/')[1];
+        const meta = this.$route.meta || {};
+        return meta.route || this.$route.path.split('/')[1];
       },
       set(val){
         this.routeUrl = val;
